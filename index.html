@@ -13,11 +13,11 @@
 
 <body>
 
-    <nav class="navbar fixed-top navbar-light bg-light">
-		<div class="container-fluid">
-			<span class="navbar-brand mb-0 h1">DNG</span>
-            <button class="btn btn-outline-primary me-2" onclick="javascript:reload();"><i class="bi bi-arrow-repeat"></i></button>
-            <a class="link-secondary" data-bs-toggle="modal" data-bs-target="#aboutModal"><i class="bi bi-info-circle-fill"></i></a>
+    <nav class="navbar fixed-top navbar-light bg-light d-flex flex-wrap align-items-center justify-content-between border-bottom">
+        <div class="container-fluid">
+            <h1 class="navbar-brand mb-0 d-flex align-items-center col-3 text-secondary">DNG</h1>
+            <button class="btn btn-primary col-auto justify-content-center" onclick="javascript:reload();"><i class="bi bi-arrow-repeat"></i> Reload</button>
+            <a class="link-secondary col-3 text-end" data-bs-toggle="modal" data-bs-target="#aboutModal"><i class="bi bi-info-circle-fill"></i></a>
         </div>
     </nav>
 
@@ -29,13 +29,13 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="aboutModalLabel">About <strong>D</strong>omain <strong>N</strong>ame <strong>G</strong>enerator</h5>
+                    <h5 class="modal-title text-secondary" id="aboutModalLabel">About <strong>D</strong>omain <strong>N</strong>ame <strong>G</strong>enerator</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <p>Domains name generated are based on letters combination probabilities in order to generate a word that looks real.</p>
-                    <p><i class="bi bi-stop-fill text-success"></i> Green buttons are domains without any entry in Google's DNS, so there is a good chance that the domain will not be registered.</p>
-                    <p><i class="bi bi-stop-fill text-secondary"></i> Grey buttons are domains already registered.</p>
+                    <p><i class="bi bi-square-fill text-success"></i> Green buttons are domains without any entry in Google's DNS, so there is a good chance that the domain will not be registered.</p>
+                    <p><i class="bi bi-square text-secondary"></i> Grey buttons are domains already registered.</p>
                 </div>
                 <div class="modal-footer">
                     <a href="https://github.com/donzellt/DNG"><i class="bi bi-github"></i></a>
@@ -45,7 +45,7 @@
     </div>
 
     <template id="domain_item">
-        <a class="btn btn-secondary btn-lg flex-fill m-1 disabled" id="button" target="_blank" aria-disabled="true">
+        <a class="btn btn-lg btn-outline-dark flex-fill m-1 disabled" id="button" target="_blank" aria-disabled="true">
             <span id="domainName"></span>
         </a>
     </template>
@@ -162,8 +162,10 @@
                         if (resolveStatus !== 0 && resolveStatus !== 2) {
                             console.log(clonElement);
                             clonElement.setAttribute("aria-disabled", "false");
-                            clonElement.classList.remove("disabled", "btn-secondary");
+                            clonElement.classList.remove("disabled", "btn-outline-dark");
                             clonElement.classList.add("btn-success");
+                        } else {
+                            clonElement.classList.add("text-decoration-line-through");
                         }
                     });
 
