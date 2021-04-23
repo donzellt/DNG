@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css">
     <title>DNG</title>
 </head>
@@ -14,11 +14,10 @@
 <body>
 
     <nav class="navbar fixed-top navbar-light bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand">DNG</a>
-            <button class="btn btn-primary" onclick="javascript:reload();"><i class="bi bi-arrow-repeat"></i></button>
-            <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#aboutModal"><i class="bi bi-info"></i></button>
-
+		<div class="container-fluid">
+			<span class="navbar-brand mb-0 h1">DNG</span>
+            <button class="btn btn-outline-primary me-2" onclick="javascript:reload();"><i class="bi bi-arrow-repeat"></i></button>
+            <a class="link-secondary" data-bs-toggle="modal" data-bs-target="#aboutModal"><i class="bi bi-info-circle-fill"></i></a>
         </div>
     </nav>
 
@@ -30,12 +29,12 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="aboutModalLabel"><strong>D</strong>omain <strong>N</strong>ame <strong>G</strong>enerator with fake words</h5>
+                    <h5 class="modal-title" id="aboutModalLabel">About <strong>D</strong>omain <strong>N</strong>ame <strong>G</strong>enerator</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>Fake words are generated based on letters combination probabilities in order to generate a word that looks real.</p>
-                    <p><i class="bi bi-stop-fill text-success"></i> Green buttons are domains without any entry in Google's DNS, so there is a good chance that the domain is not yet registered.</p>
+                    <p>Domains name generated are based on letters combination probabilities in order to generate a word that looks real.</p>
+                    <p><i class="bi bi-stop-fill text-success"></i> Green buttons are domains without any entry in Google's DNS, so there is a good chance that the domain will not be registered.</p>
                     <p><i class="bi bi-stop-fill text-secondary"></i> Grey buttons are domains already registered.</p>
                 </div>
                 <div class="modal-footer">
@@ -54,6 +53,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 
     <script>
+        // Generation properties
+        var extention = ".com";
+        var minLenght = 5;
+        var maxLenght = 10;
+
         // list of characters with their followers' corresponding accumulated propabilities
         // accumulated probabilities are usable as keys and work great with Math.random()
         var grams = {
@@ -99,7 +103,7 @@
             var last = w;
             while (true) {
 
-                if (w.length > 10)
+                if (w.length > maxLenght)
                     break;
 
                 var rand = Math.random();
@@ -112,8 +116,8 @@
                 char = grams[last][p_list[k]];
                 if (char === ' ') {
                     // space indicates end, but we do not want words shorter
-                    // than 5 so make sure we have minimum length
-                    if (w.length > 4)
+                    // than minimum length
+                    if (w.length >= minLenght)
                         break;
                 } else {
                     w += char;
@@ -136,7 +140,7 @@
                 var item;
                 let clon;
 
-                var generatedDomainName = generateWord() + '.com';
+                var generatedDomainName = generateWord() + extention;
 
                 var temp = document.getElementById("domain_item");
                 clon = temp.content.cloneNode(true);
@@ -180,6 +184,7 @@
         // Detect window resize.
         window.onresize = loadMore;
 
+        // Detect space bar press.
         document.body.onkeyup = function (event) {
             if (event.code === 'Space') {
                 reload();
