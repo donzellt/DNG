@@ -1,4 +1,5 @@
 # DNG
-A simple domain name generator based on generated fake words
+
+A simple **D**omain **N**ame **G**enerator based on generated fake words
 
 Live preview: https://dng.321.kiwi/
